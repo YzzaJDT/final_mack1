@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/* Wrapper must hide overflow */
+.marquee {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Track must be wide enough and horizontal */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 4rem; /* spacing between logos */
+  animation: marquee 25s linear infinite;
+}
+
+/* Smooth infinite loop */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Optional: pause on hover */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html,
+body,
+#app {
+    overflow-x: hidden;
+    width: 100%;
+}
