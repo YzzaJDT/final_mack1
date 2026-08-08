@@ -3,7 +3,8 @@ import { useSearchParams, Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import Navbar from "../Components/Navbar";
 import ContactAgent from "../Components/ContactAgent";
-import { fetchListingById } from "../lib/listings";
+import ListingCard from "../Components/ListingCard";
+import { fetchListingById, fetchListings, pickMoreListings } from "../lib/listings";
 
 const STATUS_STYLES = {
   available: "bg-emerald-100 text-emerald-700",
@@ -45,6 +46,7 @@ export default function PropertyShow() {
   const [error, setError] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
   const [showScrollHint, setShowScrollHint] = useState(false);
+  const [moreListings, setMoreListings] = useState([]);
   const railRef = useRef(null);
 
   useEffect(() => {
@@ -87,6 +89,23 @@ export default function PropertyShow() {
 
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
+  }, [listing]);
+
+  // Recommendations are a bonus, not core to the page, so a failure here is silent rather
+  // than surfacing an error state alongside the listing itself.
+  useEffect(() => {
+    if (!listing) return;
+
+    let cancelled = false;
+    fetchListings()
+      .then((all) => {
+        if (!cancelled) setMoreListings(pickMoreListings(all, listing));
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+    };
   }, [listing]);
 
   if (loading || error || !listing) {
@@ -267,6 +286,28 @@ export default function PropertyShow() {
               propertyPrice={listing.priceLabel}
             />
           </div>
+
+          {/* Omitted entirely rather than shown empty -- a heading over nothing reads as
+              broken, not as "we checked and there's nothing". Only happens when this is
+              the only active listing in the catalog. */}
+          {moreListings.length > 0 && (
+            <div className="mt-16 lg:mx-24">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-3xl font-bold text-gray-900">More Listings</h2>
+                <Link
+                  to="/Properties"
+                  className="text-sm font-medium text-[#284769] hover:underline"
+                >
+                  View all properties
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {moreListings.map((listing) => (
+                  <ListingCard key={listing.id} listing={listing} />
+                ))}
+              </div>
+            </div>
+          )}
 
         </div>
       </section>

@@ -30,9 +30,13 @@ const DETAIL_COLUMNS = [
   "days_on_market", "list_agent_name", "image_urls",
 ].join(",");
 
-// Available before pending before sold, which is the alphabetical order of the status
-// values, then most expensive first within each group.
-const ORDER = "status.asc,list_price.desc";
+// The public grid only ever requests active status, so sorting by price is enough --
+// there is no second status left to group by.
+const ORDER = "list_price.desc";
+
+// The public grid is for-sale/for-rent inventory only; pending and sold stay in the CRM
+// view but never reach this feed.
+const ACTIVE_FILTER = "status=eq.available&listing_type=in.(sale,rent)";
 
 const money = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -104,7 +108,9 @@ async function request(path) {
 }
 
 export async function fetchListings() {
-  const rows = await request(`public_listings?select=${LIST_COLUMNS}&order=${ORDER}`);
+  const rows = await request(
+    `public_listings?select=${LIST_COLUMNS}&${ACTIVE_FILTER}&order=${ORDER}`,
+  );
   return rows.map(normalize);
 }
 
@@ -113,4 +119,25 @@ export async function fetchListingById(id) {
     `public_listings?select=${DETAIL_COLUMNS}&id=eq.${encodeURIComponent(id)}&limit=1`,
   );
   return rows.length ? normalize(rows[0]) : null;
+}
+
+// Picks other listings to promote on the detail page. `all` is the output of
+// fetchListings() (already normalized, already active-only). Always tries to fill `limit`
+// slots -- same-city listings rank first, then the rest of the catalog fills in by price
+// proximity, so the section still has something to show even when a city has just the one
+// listing.
+export function pickMoreListings(all, current, limit = 3) {
+  return all
+    .filter((listing) => listing.id !== current.id)
+    .sort((a, b) => {
+      const aSameCity = a.city?.toLowerCase() === current.city?.toLowerCase();
+      const bSameCity = b.city?.toLowerCase() === current.city?.toLowerCase();
+      if (aSameCity !== bSameCity) return aSameCity ? -1 : 1;
+
+      return (
+        Math.abs(a.list_price - current.list_price) -
+        Math.abs(b.list_price - current.list_price)
+      );
+    })
+    .slice(0, limit);
 }
