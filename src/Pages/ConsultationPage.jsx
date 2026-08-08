@@ -1,25 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
+import ralphImage from "../../public/images/ralph.jpg"
 
-const CALENDLY_URL =
-    "https://calendly.com/spanishbread06032000/30min?month=2026-07&date=2026-07-04";
 const CALENDLY_SCRIPT_SRC = "https://assets.calendly.com/assets/external/widget.js";
 
 const CONSULTANTS = [
     {
-        id: "jazzy",
-        name: "Jazzy",
+        id: "ralph",
+        name: "Ralph",
         role: "Real Estate Consultant",
-        avatar: "https://randomuser.me/api/portraits/women/65.jpg",
-        // Not rendered anywhere — only sent to Calendly as the prefilled
-        // guest so the booking automatically includes this consultant.
-        email: "delatorrejazzy36@gmail.com",
+        avatar: ralphImage,
+        // Each consultant's own Calendly account/event — she's the native
+        // host of whatever gets booked here, so no guest-field workaround
+        // is needed to get her onto the meeting.
+        calendlyUrl: "https://calendly.com/gwen-mack1realtygroup/30min",
     },
     {
-        id: "jazel",
-        name: "Jazel",
+        id: "jahkai",
+        name: "Jahkai",
         role: "Real Estate Consultant",
-        avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-        email: "sixeleven.dlpc.jazzydelatorre@gmail.com",
+        avatar: "",
+        calendlyUrl: "",
     },
 ];
 
@@ -51,32 +51,22 @@ export default function ConsultationPage() {
     // Calendly's widget.js only auto-scans the page once on load, so the
     // widget must be initialized manually whenever the container appears
     // (it isn't in the DOM yet at that initial scan since it only renders
-    // after a consultant is selected).
+    // after a consultant is selected). Re-runs whenever the visitor picks a
+    // different consultant, swapping in that consultant's own Calendly URL.
     useEffect(() => {
         if (!selected || !calendlyReady || !widgetRef.current) return;
 
         widgetRef.current.innerHTML = "";
 
         window.Calendly.initInlineWidget({
-            url: CALENDLY_URL,
+            url: selected.calendlyUrl,
             parentElement: widgetRef.current,
-            // Recorded on the Calendly booking's tracking info (visible in
-            // your Calendly dashboard) and read by the invitee.created
-            // webhook to decide which agent's Google Calendar gets the event.
-            utm: {
-                utmContent: selected.id,
-            },
-            // Auto-adds the selected consultant as a guest on the booking so
-            // they're on the meeting without the visitor typing anything.
-            prefill: {
-                guests: [selected.email],
-            },
         });
     }, [selected, calendlyReady]);
 
     return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-            <div className="w-full max-w-6xl bg-white rounded-2xl shadow-lg grid md:grid-cols-2 overflow-hidden">
+        <div className="max-h-screen bg-gray-100 flex items-center justify-center p-6">
+            <div className="w-full max-w-6xl bg-white max-h-screen rounded-2xl shadow-lg grid md:grid-cols-2 overflow-hidden">
 
                 {/* LEFT — INFO + CONSULTANT PICKER */}
                 <div className="p-10 border-r">
@@ -134,7 +124,7 @@ export default function ConsultationPage() {
                                         <img
                                             src={person.avatar}
                                             alt={person.name}
-                                            className="w-12 h-12 rounded-full object-cover"
+                                            className="w-20 h-26 object-cover"
                                         />
                                         <div>
                                             <p className="font-semibold text-gray-900">
@@ -170,7 +160,7 @@ export default function ConsultationPage() {
                             <div
                                 ref={widgetRef}
                                 className="flex-1"
-                                style={{ minWidth: "320px", height: "700px" }}
+                                style={{ minWidth: "320px", height: "900px" }}
                             ></div>
                         </>
                     ) : (

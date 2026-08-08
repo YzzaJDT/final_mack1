@@ -1,28 +1,17 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import crypto from "node:crypto";
 import { getBookedStartTimes, createBooking } from "./bookingsStore.js";
 import { CONSULTANTS } from "./consultants.js";
-import { recordConsultantBooking, getConsultantBookings } from "./consultantBookingsStore.js";
-import { sendConsultationNotice } from "./mailer.js";
+import { getConsultantBookings } from "./consultantBookingsStore.js";
 
 const app = express();
 app.use(cors());
-// Keep the raw body around so the Calendly webhook signature (computed over
-// the exact bytes Calendly sent) can be verified before trusting the payload.
-app.use(
-    express.json({
-        verify: (req, res, buf) => {
-            req.rawBody = buf;
-        },
-    })
-);
+app.use(express.json());
 
 const PORT = process.env.PORT || 3001;
 const CALENDLY_TOKEN = process.env.CALENDLY_TOKEN;
 const CALENDLY_EVENT_TYPE = process.env.CALENDLY_EVENT_TYPE;
-const CALENDLY_WEBHOOK_SIGNING_KEY = process.env.CALENDLY_WEBHOOK_SIGNING_KEY;
 
 app.get("/api/calendly/event-types", async (req, res) => {
     // Calendly's event_type_available_times endpoint only accepts a window
@@ -85,79 +74,6 @@ app.post("/api/calendly/book-slot", (req, res) => {
     }
 
     res.json({ message: "Booked successfully", booking });
-});
-
-function isValidCalendlySignature(req) {
-    if (!CALENDLY_WEBHOOK_SIGNING_KEY) return false;
-
-    const header = req.get("Calendly-Webhook-Signature");
-    if (!header) return false;
-
-    const parts = Object.fromEntries(
-        header.split(",").map((part) => part.split("="))
-    );
-    const { t: timestamp, v1: signature } = parts;
-    if (!timestamp || !signature) return false;
-
-    const expected = crypto
-        .createHmac("sha256", CALENDLY_WEBHOOK_SIGNING_KEY)
-        .update(`${timestamp}.${req.rawBody}`)
-        .digest("hex");
-
-    const expectedBuf = Buffer.from(expected, "hex");
-    const signatureBuf = Buffer.from(signature, "hex");
-
-    return (
-        expectedBuf.length === signatureBuf.length &&
-        crypto.timingSafeEqual(expectedBuf, signatureBuf)
-    );
-}
-
-// Calendly calls this after every booking. The consultant page tags each
-// booking with utm_content = "jazzy" | "jazel" (see ConsultationPage.jsx),
-// so this handler reads that tag to record the booking against the right
-// consultant and email them the details.
-app.post("/api/calendly/webhook", async (req, res) => {
-    if (!isValidCalendlySignature(req)) {
-        return res.status(401).json({ message: "Invalid webhook signature" });
-    }
-
-    // Acknowledge immediately; Calendly retries on non-2xx or slow responses.
-    res.status(200).json({ received: true });
-
-    if (req.body.event !== "invitee.created") return;
-
-    const payload = req.body.payload ?? {};
-    const consultantId = payload.tracking?.utm_content;
-    const consultant = CONSULTANTS[consultantId];
-
-    if (!consultant) {
-        console.warn(`[webhook] Unknown or missing consultant tag: "${consultantId}"`);
-        return;
-    }
-
-    const { duplicate, booking } = recordConsultantBooking({
-        consultantId,
-        inviteeUri: payload.uri,
-        inviteeName: payload.name,
-        inviteeEmail: payload.email,
-        startTime: payload.scheduled_event?.start_time,
-        endTime: payload.scheduled_event?.end_time,
-        eventUri: payload.scheduled_event?.uri,
-    });
-
-    if (duplicate) return;
-
-    try {
-        await sendConsultationNotice({
-            consultant,
-            inviteeName: booking.inviteeName,
-            inviteeEmail: booking.inviteeEmail,
-            startTime: booking.startTime,
-        });
-    } catch (err) {
-        console.error("[webhook] Failed to send consultant notification:", err);
-    }
 });
 
 app.get("/api/consultants/:id/bookings", (req, res) => {
