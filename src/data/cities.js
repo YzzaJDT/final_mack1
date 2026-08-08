@@ -15,10 +15,9 @@ export const CITIES = [
   { name: "Fort Lauderdale", image: commonsFile("Las_Olas_Boulevard,_Fort_Lauderdale,_Florida_09.jpg") }, // Las Olas Boulevard
 ];
 
-// The listings API has no real city/landmark field on each property, so each
-// property is deterministically assigned one of the CITIES above (stable
-// across renders/pages since it's derived from the property's own id).
-export function getPropertyCity(property) {
-  const id = parseInt(property?.id, 10) || 0;
-  return CITIES[id % CITIES.length].name;
+// Listings now carry a real city from the MLS feed, so nothing is assigned any more.
+// MLS supplies it upper-cased ("ORLANDO") while these tiles are title-cased, hence the
+// case-insensitive compare.
+export function matchesCity(listing, cityName) {
+  return listing?.city?.toLowerCase() === cityName?.toLowerCase();
 }

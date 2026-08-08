@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
+import { buildLeadMessage, submitLead } from "../lib/leads";
 
 // meet.new always creates a brand-new instant Google Meet when opened —
 // the agent clicks it to start a meeting, then shares that meeting's URL with the client.
@@ -10,13 +11,29 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 const DEFAULT_AGENT_EMAIL = import.meta.env.VITE_AGENT_EMAIL || "delatorrejazzy36@gmail.com";
 
-export default function ContactAgent({ propertyAddress, propertyPrice, agentName, agentEmail }) {
+// Announces the enquiry to the agent's inbox. Best-effort by design: the lead is already
+// saved in the CRM by the time this runs, so a missing key or a bad send must not read as
+// a failed enquiry to the visitor.
+async function announceByEmail(fields) {
+  if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) return;
+
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, fields, {
+      publicKey: EMAILJS_PUBLIC_KEY,
+    });
+  } catch {
+    // Swallowed on purpose; the CRM lead is the record that matters.
+  }
+}
+
+export default function ContactAgent({ listingId, propertyAddress, propertyPrice, agentName, agentEmail }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
     contactNumber: "",
     phone: "",
     address: "",
+    message: "",
   });
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
 
@@ -26,38 +43,52 @@ export default function ContactAgent({ propertyAddress, propertyPrice, agentName
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatus("sending");
 
-    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+    // The form asks for two numbers but a lead row keeps one, so the spare rides along in
+    // the message instead of being dropped.
+    const contactNumber = form.contactNumber.trim();
+    const phone = form.phone.trim() || contactNumber;
+    const altNumber = contactNumber === phone ? "" : contactNumber;
+
+    // The CRM lead is the record that matters, so it is written first and is the only
+    // thing that can fail the submission.
+    try {
+      await submitLead({
+        name: form.name,
+        email: form.email,
+        phone,
+        message: buildLeadMessage({
+          message: form.message.trim(),
+          altNumber,
+          address: form.address.trim(),
+          propertyAddress,
+          propertyPrice,
+        }),
+        listingId,
+        propertyInterest: propertyAddress,
+      });
+    } catch {
       setStatus("error");
       return;
     }
 
-    setStatus("sending");
+    await announceByEmail({
+      to_email: agentEmail || DEFAULT_AGENT_EMAIL,
+      agent_name: agentName || "there",
+      client_name: form.name,
+      client_email: form.email,
+      client_phone: form.phone,
+      client_contact_number: form.contactNumber,
+      client_address: form.address,
+      client_message: form.message,
+      property_address: propertyAddress || "",
+      property_price: propertyPrice || "",
+      meet_link: GOOGLE_MEET_LINK,
+    });
 
-    try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          to_email: agentEmail || DEFAULT_AGENT_EMAIL,
-          agent_name: agentName || "there",
-          client_name: form.name,
-          client_email: form.email,
-          client_phone: form.phone,
-          client_contact_number: form.contactNumber,
-          client_address: form.address,
-          property_address: propertyAddress || "",
-          property_price: propertyPrice || "",
-          meet_link: GOOGLE_MEET_LINK,
-        },
-        { publicKey: EMAILJS_PUBLIC_KEY }
-      );
-
-      setStatus("sent");
-      setForm({ name: "", email: "", contactNumber: "", phone: "", address: "" });
-    } catch (err) {
-      setStatus("error");
-    }
+    setStatus("sent");
+    setForm({ name: "", email: "", contactNumber: "", phone: "", address: "", message: "" });
   };
 
   return (
@@ -103,14 +134,20 @@ export default function ContactAgent({ propertyAddress, propertyPrice, agentName
             <input type="text" placeholder="Full Address" value={form.address} onChange={handleChange("address")} className="w-full bg-white rounded-lg px-4 py-3 text-sm outline-none border border-gray-200 focus:ring-2 focus:ring-orange-400" />
           </div>
 
+          {/* Message - FULL WIDTH */}
+          <div className="md:col-span-2">
+            <label className="block text-sm text-gray-600 mb-2">Message</label>
+            <textarea rows={4} placeholder="Tell us what you would like to know about this property" required value={form.message} onChange={handleChange("message")} className="w-full bg-white rounded-lg px-4 py-3 text-sm outline-none border border-gray-200 focus:ring-2 focus:ring-orange-400 resize-y" />
+          </div>
+
         </div>
 
         {/* Status message */}
         {status === "sent" && (
-          <p className="mt-4 text-sm text-green-600">Message sent to the agent.</p>
+          <p className="mt-4 text-sm text-green-600">Thanks — your details are with our team, and an agent will be in touch shortly.</p>
         )}
         {status === "error" && (
-          <p className="mt-4 text-sm text-red-600">Something went wrong sending your message. Please try again.</p>
+          <p className="mt-4 text-sm text-red-600">Something went wrong saving your details. Please try again.</p>
         )}
 
         {/* Button */}
