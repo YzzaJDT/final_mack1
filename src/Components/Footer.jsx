@@ -31,7 +31,7 @@ export default function Footer() {
             </div>
 
             <p className="text-sm text-white leading-relaxed">
-              Quality homes built to suit your lifestyle, offering comfort, space, and flexibility.
+              Your Transaction. Our Commitment
             </p>
           </div>
 
@@ -54,7 +54,8 @@ export default function Footer() {
 
             <p className="text-sm text-white leading-relaxed">
               Email: mack1@mack1realty.com <br />
-              Phone: (352) 346-2105 / (855) MACK-001
+              Phone: (352) 346-2105 <br />
+              Office: (855) MACK-001
             </p>
 
             <div className="flex items-center gap-4 mt-3">

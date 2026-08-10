@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 
 const faqs = [
   {
-    question: "What Is Mack1?",
+    question: "What Is Mack 1 Realty?",
     answer:
-      "Mack1 is a modern real estate platform designed to help you easily find, compare, and connect with the right property.",
+      "Mack 1 Realty is a modern real estate platform designed to help you easily find, compare, and connect with the right property.",
   },
   {
-    question: "Does Mack1 offer both rental and for-sale listings?",
+    question: "Does Mack 1 Realty offer both rental and for-sale listings?",
     answer:
-      "Yes, Mack1 lets you easily search for both rental properties and homes for sale using smart filters.",
+      "Yes, Mack 1 Realty lets you easily search for both rental properties and homes for sale using smart filters.",
   },
   {
     question: "How frequently are property listings updated?",
@@ -19,7 +19,7 @@ const faqs = [
       "Listings are regularly refreshed to ensure you always see accurate and current property availability.",
   },
   {
-    question: "Can I Contact An Agent Through Mack1?",
+    question: "Can I Contact An Agent Through Mack 1 Realty?",
     answer:
       "Yes, you can directly contact through the contacts section.",
   },
@@ -48,7 +48,7 @@ export default function FaqSection() {
 
           {/* Description */}
           <p className="text-gray-500 mt-4">
-           We’re here to help answer your real estate questions and concerns.
+            We’re here to help answer your real estate questions and concerns.
           </p>
 
           {/* Contact Box */}
@@ -61,13 +61,13 @@ export default function FaqSection() {
               dont worry we’re free for consultation, just click button below.
             </p>
 
-          <Link
-            to="/Location"
-            className="inline-flex items-center mt-5 gap-2 bg-linear-to-r from-[#345578] to-[#284769] text-white px-5 py-2.5 rounded-xl text-sm font-medium shadow-lg hover:scale-105 transition w-fit"
-          >
-            View All Locations
-            <span className="text-base">→</span>
-          </Link>
+            <Link
+              to="/Location"
+              className="inline-flex items-center mt-5 gap-2 bg-linear-to-r from-[#345578] to-[#284769] text-white px-5 py-2.5 rounded-xl text-sm font-medium shadow-lg hover:scale-105 transition w-fit"
+            >
+              View All Locations
+              <span className="text-base">→</span>
+            </Link>
 
           </div>
 
@@ -88,9 +88,8 @@ export default function FaqSection() {
               >
                 {faq.question}
                 <FiChevronDown
-                  className={`transition-transform ${
-                    active === index ? "rotate-180" : ""
-                  }`}
+                  className={`transition-transform ${active === index ? "rotate-180" : ""
+                    }`}
                 />
               </button>
 
