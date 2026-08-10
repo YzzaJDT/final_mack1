@@ -9,7 +9,7 @@ import Testimonials from "../Components/Testimonials";
 import FaqSection from "../Components/FaqSection";
 import Footer from "../Components/Footer";
 
-const bg3 = "/images/pic6.jpg";
+const bg3 = "/images/bg.jpg";
 
 // Only ever shown if the feed fails or comes back empty -- never while it is still
 // loading. Showing a stock photo during the fetch made a decorative image read as a

@@ -15,13 +15,13 @@ export default function HeroSection() {
 
         {/* Subtitle */}
         <p className="bg-linear-to-r from-[#345578] to-[#284769] bg-clip-text text-transparent mt-4 max-w-2xl mx-auto text-sm md:text-base">
-         Delivering modern, high-quality spaces with innovation, transparency, and a focus on our customers.
+          Delivering modern, high-quality spaces with innovation, transparency, and a focus on our customers.
         </p>
 
         {/* Image */}
         <div className="mt-10">
           <img
-            src="/images/bg4.jpg"
+            src="/images/bg.jpg"
             alt="house"
             className="w-full h-[300px] md:h-[400px] object-cover rounded-2xl shadow-md"
           />
