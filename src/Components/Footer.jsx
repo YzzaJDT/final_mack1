@@ -31,7 +31,7 @@ export default function Footer() {
             </div>
 
             <p className="text-sm text-white leading-relaxed">
-              Your Transaction. Our Commitment
+              Your Home. Our Priority
             </p>
           </div>
 
