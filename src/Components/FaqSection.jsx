@@ -58,14 +58,14 @@ export default function FaqSection() {
             </h4>
 
             <p className="text-gray-500 mt-2">
-              dont worry we’re free for consultation, just click button below.
+              Dont worry we’re free for consultation, just click button below.
             </p>
 
             <Link
-              to="/Location"
+              to="/ConsultationPage"
               className="inline-flex items-center mt-5 gap-2 bg-linear-to-r from-[#345578] to-[#284769] text-white px-5 py-2.5 rounded-xl text-sm font-medium shadow-lg hover:scale-105 transition w-fit"
             >
-              View All Locations
+              Get Consultation
               <span className="text-base">→</span>
             </Link>
 
