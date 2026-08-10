@@ -106,13 +106,13 @@ export default function ContactAgent({ listingId, propertyAddress, propertyPrice
 
           {/* Full Name */}
           <div>
-            <label className="block text-sm text-gray-600 mb-2">Full Name</label>
+            <label className="block text-sm text-gray-600 mb-2">Full Name <span className="text-red-600">*</span></label>
             <input type="text" placeholder="Name" required value={form.name} onChange={handleChange("name")} className="w-full bg-white rounded-lg px-4 py-3 text-sm outline-none border border-gray-200 focus:ring-2 focus:ring-orange-400" />
           </div>
 
           {/* Email Address */}
           <div>
-            <label className="block text-sm text-gray-600 mb-2">Email Address</label>
+            <label className="block text-sm text-gray-600 mb-2">Email Address <span className="text-red-600">*</span></label>
             <input type="email" placeholder="Email Address" required value={form.email} onChange={handleChange("email")} className="w-full bg-white rounded-lg px-4 py-3 text-sm outline-none border border-gray-200 focus:ring-2 focus:ring-orange-400" />
           </div>
 
@@ -136,7 +136,7 @@ export default function ContactAgent({ listingId, propertyAddress, propertyPrice
 
           {/* Message - FULL WIDTH */}
           <div className="md:col-span-2">
-            <label className="block text-sm text-gray-600 mb-2">Message</label>
+            <label className="block text-sm text-gray-600 mb-2">Message <span className="text-red-600">*</span></label>
             <textarea rows={4} placeholder="Tell us what you would like to know about this property" required value={form.message} onChange={handleChange("message")} className="w-full bg-white rounded-lg px-4 py-3 text-sm outline-none border border-gray-200 focus:ring-2 focus:ring-orange-400 resize-y" />
           </div>
 

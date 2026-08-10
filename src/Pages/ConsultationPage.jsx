@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import ralphImage from "../../public/images/ralph.jpg"
+import ralphImage from "../../public/images/ralph.png"
 
 const CALENDLY_SCRIPT_SRC = "https://assets.calendly.com/assets/external/widget.js";
 
@@ -115,10 +115,9 @@ export default function ConsultationPage() {
                                         key={person.id}
                                         onClick={() => setSelectedPerson(person.id)}
                                         className={`flex items-center gap-4 p-4 rounded-xl border-2 text-left transition
-                                            ${
-                                                isSelected
-                                                    ? "border-blue-600 bg-blue-50"
-                                                    : "border-gray-200 bg-white hover:border-blue-300"
+                                            ${isSelected
+                                                ? "border-blue-600 bg-blue-50"
+                                                : "border-gray-200 bg-white hover:border-blue-300"
                                             }`}
                                     >
                                         <img

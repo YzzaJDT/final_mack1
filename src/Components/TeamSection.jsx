@@ -8,7 +8,7 @@ export default function TeamSection() {
     {
       name: "Ralph Mckenzi",
       role: "Founder & CEO",
-      image: "/images/ralph.jpg",
+      image: "/images/ralph.png",
     },
   ];
 
@@ -28,7 +28,7 @@ export default function TeamSection() {
         <div className="flex items-center justify-between mb-10">
           <div>
             <h2 className="text-3xl sm:text-4xl font-bold mt-4">
-                   Results-Driven Real Estate Team
+              Results-Driven Real Estate Team
             </h2>
           </div>
 
