@@ -6,6 +6,7 @@ import PremiumListings from "../Components/PremiumListings";
 import FeaturesSection from "../Components/FeaturesSection";
 import AboutSection from "../Components/AboutSection";
 import Testimonials from "../Components/Testimonials";
+import GoogleReview from "../Components/GoogleReview";
 import FaqSection from "../Components/FaqSection";
 import Footer from "../Components/Footer";
 
@@ -210,6 +211,7 @@ export default function Home() {
     <FeaturesSection />
     <AboutSection />
     <Testimonials />
+    <GoogleReview />
     <FaqSection/>
     <Footer/>
 
