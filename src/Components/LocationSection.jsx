@@ -58,6 +58,18 @@ export default function LocationSection() {
 
   return (
     <div className="bg-gray-100 px-6 md:px-16 py-12">
+      {/* Heading lives here rather than on the page so it disappears with the grid. */}
+      <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 text-center">
+        Where We Have Homes{" "}
+        <span className="bg-linear-to-r from-[#345578] to-[#284769] bg-clip-text text-transparent">
+          Available Now
+        </span>
+      </h2>
+
+      <p className="text-gray-500 max-w-xl mx-auto mb-12 text-sm sm:text-base text-center">
+        See what's for sale today across Central Florida.
+      </p>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {cities.map((loc) => (
           <Link

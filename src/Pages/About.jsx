@@ -21,14 +21,12 @@ export default function About() {
     alt="Modern real estate website background"
   />
 
-  {/* Main dark + blue gradient overlay */}
-  <div className="absolute inset-0 bg-linear-to-r from-[#0b1f3a]/80 via-[#0b1f3a]/60 to-black/60"></div>
+  {/* Main dark + blue gradient overlay, kept light so the photo reads through. */}
+  <div className="absolute inset-0 bg-linear-to-r from-[#0b1f3a]/60 via-[#0b1f3a]/55 to-black/55"></div>
 
   {/* Soft blue branding glow */}
   <div className="absolute inset-0 bg-blue-900/20 mix-blend-overlay"></div>
 </div>
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/50"></div>
 
         {/* ✅ Content */}
         <div
@@ -41,7 +39,7 @@ export default function About() {
 
             {/* Title */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold drop-shadow-lg">
-             Discover Your  <span className="bg-linear-to-r from-[#345578] to-[#284769] bg-clip-text text-transparent"> Perfect </span> Property
+             Discover Your  <span className="bg-linear-to-r from-[#a9d0f5] to-[#7fb0da] bg-clip-text text-transparent"> Perfect </span> Property
             </h1>
 
           </div>
