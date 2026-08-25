@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import ralphImage from "../../public/images/ralph.png"
-import jahkaiImage from "../../public/images/jakhai.jpeg"
+
+const ralphImage = "/images/ralph.png";
+const jahkaiImage = "/images/jakhai.jpeg";
 
 const CALENDLY_SCRIPT_SRC = "https://assets.calendly.com/assets/external/widget.js";
 
