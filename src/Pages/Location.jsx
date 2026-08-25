@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../Components/Navbar";
+import HeroBackdrop from "../Components/HeroBackdrop";
 import LocationSection from "../Components/LocationSection";
 import Footer from "../Components/Footer";
 import { FaHome, FaMapMarkerAlt } from "react-icons/fa";
@@ -20,19 +21,7 @@ export default function Location() {
 
         <Navbar />
 
-        <div className="absolute inset-0">
-  <img
-    src="/images/bg1.jpg"
-    className="w-full h-full object-cover object-center"
-    alt="Modern real estate website background"
-  />
-
-  {/* Main dark + blue gradient overlay, kept light so the photo reads through. */}
-  <div className="absolute inset-0 bg-linear-to-r from-[#0b1f3a]/60 via-[#0b1f3a]/55 to-black/55"></div>
-
-  {/* Soft blue branding glow */}
-  <div className="absolute inset-0 bg-blue-900/20 mix-blend-overlay"></div>
-</div>
+        <HeroBackdrop image="/images/bg1.jpg" />
 
         {/* ✅ Content */}
         <div

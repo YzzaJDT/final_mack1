@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchListings } from "../lib/listings";
 import Navbar from "../Components/Navbar";
+import HeroBackdrop from "../Components/HeroBackdrop";
 import PremiumListings from "../Components/PremiumListings";
 import FeaturesSection from "../Components/FeaturesSection";
 import AboutSection from "../Components/AboutSection";
@@ -88,19 +89,7 @@ export default function Home() {
   <Navbar />
 
   {/* Background Image */}
-<div className="absolute inset-0">
-  <img
-    src={bg3}
-    className="w-full h-full object-cover object-center"
-    alt="Modern real estate website background"
-  />
-
-  {/* Main dark + blue gradient overlay, kept light so the photo reads through. */}
-  <div className="absolute inset-0 bg-linear-to-r from-[#0b1f3a]/60 via-[#0b1f3a]/55 to-black/55"></div>
-
-  {/* Soft blue branding glow */}
-  <div className="absolute inset-0 bg-blue-900/20 mix-blend-overlay"></div>
-</div>
+  <HeroBackdrop image={bg3} />
 
 
   {/* Hero Content */}

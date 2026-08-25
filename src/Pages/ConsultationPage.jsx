@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import ralphImage from "../../public/images/ralph.png"
+import jahkaiImage from "../../public/images/jakhai.jpeg"
 
 const CALENDLY_SCRIPT_SRC = "https://assets.calendly.com/assets/external/widget.js";
 
@@ -12,14 +13,14 @@ const CONSULTANTS = [
         // Each consultant's own Calendly account/event — she's the native
         // host of whatever gets booked here, so no guest-field workaround
         // is needed to get her onto the meeting.
-        calendlyUrl: "https://calendly.com/gwen-mack1realtygroup/30min",
+        calendlyUrl: "https://calendly.com/ralph-mack1realtygroup/30min",
     },
     {
         id: "jahkai",
         name: "Jahkai",
         role: "Real Estate Consultant",
-        avatar: "",
-        calendlyUrl: "",
+        avatar: jahkaiImage,
+        calendlyUrl: "https://calendly.com/ralph-mack1realtygroup/30min",
     },
 ];
 

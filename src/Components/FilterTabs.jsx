@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { fetchListings } from "../lib/listings";
 import ListingCard from "./ListingCard";
 
@@ -13,20 +13,26 @@ export default function FilterTabs({ limit }) {
   const [active, setActive] = useState("all");
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const locationFilter = searchParams.get("location");
 
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
+    setError(false);
 
     fetchListings()
       .then((data) => {
         if (!cancelled) setListings(data);
       })
       .catch((err) => {
-        if (!cancelled) setError(err.message);
+        // The thrown message names env vars and HTTP status codes, which belongs in the
+        // console for us and never on a public page.
+        console.error("Listings feed failed:", err);
+        if (!cancelled) setError(true);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -35,7 +41,7 @@ export default function FilterTabs({ limit }) {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [attempt]);
 
   const filtered = listings.filter((listing) => {
     // MLS cities arrive upper-cased ("ORLANDO") while the location tiles are title-cased.
@@ -70,26 +76,53 @@ export default function FilterTabs({ limit }) {
         </div>
       )}
 
-      {/* FILTER BUTTONS */}
-      <div className="flex gap-3 mb-8">
-        {TABS.map((tab) => (
-          <button
-            key={tab.value}
-            onClick={() => setActive(tab.value)}
-            className={`px-5 py-2 rounded-xl text-sm transition
-              ${active === tab.value
-                ? "bg-linear-to-r from-[#345578] to-[#284769] text-white"
-                : "bg-white text-gray-600 hover:bg-gray-200"}`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+      {/* FILTER BUTTONS. Hidden while the feed is down -- there is nothing to filter. */}
+      {!error && (
+        <div className="flex gap-3 mb-8">
+          {TABS.map((tab) => (
+            <button
+              key={tab.value}
+              onClick={() => setActive(tab.value)}
+              className={`px-5 py-2 rounded-xl text-sm transition
+                ${active === tab.value
+                  ? "bg-linear-to-r from-[#345578] to-[#284769] text-white"
+                  : "bg-white text-gray-600 hover:bg-gray-200"}`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {loading && <p className="text-gray-500">Loading listings...</p>}
 
+      {/* The feed being down is our problem, not the visitor's, so the fallback offers a
+          retry and a way to reach an agent rather than just reporting the failure. */}
       {error && (
-        <p className="text-red-600">Could not load listings. {error}</p>
+        <div className="bg-white rounded-2xl shadow-sm px-6 py-12 text-center">
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            Our listings aren't loading right now
+          </h3>
+          <p className="text-sm text-gray-500 max-w-md mx-auto mb-8">
+            This is a temporary problem on our end, not with your connection. Try again in
+            a moment, or reach out and an agent will send you what's currently available.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <button
+              onClick={() => setAttempt((count) => count + 1)}
+              className="px-6 py-3 rounded-xl text-sm font-medium text-white bg-linear-to-r from-[#345578] to-[#284769] hover:scale-105 transition"
+            >
+              Try again
+            </button>
+            <Link
+              to="/ConsultationPage"
+              className="px-6 py-3 rounded-xl text-sm font-medium text-[#284769] bg-gray-100 hover:bg-gray-200 transition"
+            >
+              Talk to an agent
+            </Link>
+          </div>
+        </div>
       )}
 
       {!loading && !error && visible.length === 0 && (

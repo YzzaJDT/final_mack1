@@ -57,13 +57,15 @@ export default function Navbar() {
           </li>
         </ul>
 
-        {/* Desktop Contact Button */}
-        <Link
-          to="/About"
+        {/* Desktop Agent Application Button */}
+        <a
+          href="https://ralphmckenzielending.com/"
+          target="_blank"
+          rel="noopener noreferrer"
           className="hidden md:block px-6 py-3 rounded-xl font-semibold text-white bg-linear-to-r from-[#345578] to-[#284769] shadow-lg hover:scale-105 transition-transform duration-300"
         >
-          Contact Us
-        </Link>
+          Apply Now
+        </a>
 
         {/* Mobile Hamburger Button */}
         <button
@@ -87,12 +89,14 @@ export default function Navbar() {
             <li><Link to="/Blogs">Blogs</Link></li>
 
             <li>
-              <Link
-                to="/About"
+              <a
+                href="https://ralphmckenzielending.com/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block w-full text-center px-6 py-3 rounded-xl font-semibold bg-linear-to-r from-[#345578] to-[#284769]"
               >
-                Contact Us
-              </Link>
+                Become An Agent
+              </a>
             </li>
           </ul>
         </div>

@@ -7,7 +7,7 @@ export default function TeamSection() {
   const team = [
     {
       name: "Ralph McKenzie",
-      role: "Founder & CEO",
+      role: "Realtor / MLO",
       image: "/images/ralph.png",
     },
   ];
