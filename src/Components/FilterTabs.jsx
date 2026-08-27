@@ -62,7 +62,7 @@ export default function FilterTabs({ limit }) {
 
       {/* LOCATION FILTER BANNER */}
       {locationFilter && (
-        <div className="flex items-center justify-between mb-6 bg-white rounded-xl px-5 py-3 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-6 bg-white rounded-xl px-5 py-3 shadow-sm">
           <span className="text-sm text-gray-700">
             Showing properties in{" "}
             <span className="font-semibold">{locationFilter}</span>
@@ -78,7 +78,7 @@ export default function FilterTabs({ limit }) {
 
       {/* FILTER BUTTONS. Hidden while the feed is down -- there is nothing to filter. */}
       {!error && (
-        <div className="flex gap-3 mb-8">
+        <div className="flex flex-wrap gap-3 mb-8">
           {TABS.map((tab) => (
             <button
               key={tab.value}

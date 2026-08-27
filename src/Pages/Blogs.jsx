@@ -26,7 +26,7 @@ export default function Blogs() {
           <div className="max-w-3xl">
 
             {/* Title */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold drop-shadow-lg">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold drop-shadow-lg">
               Our <span className="text-orange-500"> Blogs </span>
             </h1>
           </div>

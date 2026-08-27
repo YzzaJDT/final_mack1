@@ -266,7 +266,7 @@ export default function PropertyShow() {
               </div>
             )}
 
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Description</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Description</h2>
             <p className="text-gray-600 leading-relaxed text-md whitespace-pre-line">
               {listing.description || "No description was provided for this listing."}
             </p>

@@ -67,12 +67,12 @@ export default function ConsultationPage() {
     }, [selected, calendlyReady]);
 
     return (
-        <div className="max-h-screen bg-gray-100 flex items-center justify-center p-6">
-            <div className="w-full max-w-6xl bg-white max-h-screen rounded-2xl shadow-lg grid md:grid-cols-2 overflow-hidden">
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 sm:p-6 py-10">
+            <div className="w-full max-w-6xl bg-white rounded-2xl shadow-lg grid md:grid-cols-2">
 
                 {/* LEFT — INFO + CONSULTANT PICKER */}
-                <div className="p-10 border-r">
-                    <h1 className="text-3xl font-bold">
+                <div className="p-6 sm:p-8 md:p-10 border-b md:border-b-0 md:border-r">
+                    <h1 className="text-2xl sm:text-3xl font-bold">
                         Free Initial Consultation Program
                     </h1>
 
@@ -148,7 +148,7 @@ export default function ConsultationPage() {
                 </div>
 
                 {/* RIGHT — CALENDAR */}
-                <div className="p-10 flex flex-col">
+                <div className="p-6 sm:p-8 md:p-10 flex flex-col">
                     {selected ? (
                         <>
                             <p className="text-sm text-gray-600 mb-4">
@@ -160,12 +160,11 @@ export default function ConsultationPage() {
                             </p>
                             <div
                                 ref={widgetRef}
-                                className="flex-1"
-                                style={{ minWidth: "320px", height: "900px" }}
+                                className="flex-1 min-w-70 min-h-225"
                             ></div>
                         </>
                     ) : (
-                        <div className="flex-1 flex items-center justify-center text-center text-gray-400 text-sm min-h-[400px]">
+                        <div className="flex-1 flex items-center justify-center text-center text-gray-400 text-sm min-h-100">
                             Select a consultant on the left to view their
                             availability.
                         </div>

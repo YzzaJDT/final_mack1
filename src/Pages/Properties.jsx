@@ -24,14 +24,14 @@ export default function Properties() {
           <div className="max-w-3xl">
 
             {/* Title */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold drop-shadow-lg">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold drop-shadow-lg">
               Make Every Spaces
               <br />
             <span className="bg-linear-to-r from-[#a9d0f5] to-[#7fb0da] bg-clip-text text-transparent">Unique</span> and   <span className="bg-linear-to-r from-[#a9d0f5] to-[#7fb0da] bg-clip-text text-transparent">Inspiring</span>
             </h1>
 
             {/* Description */}
-            <p className="mt-4 text-md sm:text-base max-w-2xl text-white/90">
+            <p className="mt-4 text-base sm:text-lg max-w-2xl text-white/90">
               Your life evolves, and your home should too. We design flexible
               living spaces that adapt to your current needs and accommodate
               your evolving aspirations for the future.

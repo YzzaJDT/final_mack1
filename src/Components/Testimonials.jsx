@@ -36,7 +36,7 @@ export default function Testimonials() {
 
   return (
     <section className="bg-gray-100 py-4 relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
-      <div className="max-w-6xl mx-auto text-center relative">
+      <div className="max-w-6xl mx-auto text-center relative px-4 sm:px-6 lg:px-8">
 
         {/* Tag */}
         <div className="flex justify-center mt-3">
@@ -59,7 +59,7 @@ export default function Testimonials() {
         </div>
 
         {/* Title */}
-        <h2 className="text-4xl md:text-5xl font-bold">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">
           Clients <span className="bg-linear-to-r from-[#345578] to-[#284769] bg-clip-text text-transparent">Success</span> Stories
         </h2>
 
@@ -70,7 +70,7 @@ export default function Testimonials() {
         </p>
 
         {/* Testimonial Card */}
-        <div className="mt-16 bg-white rounded-3xl shadow-md p-10 max-w-2xl mx-auto relative z-10">
+        <div className="mt-16 bg-white rounded-3xl shadow-md p-6 sm:p-8 md:p-10 max-w-2xl mx-auto relative z-10">
 
           <p className="text-gray-600 leading-relaxed text-lg">
             {testimonials[index].text}

@@ -23,7 +23,7 @@ export default function GoogleReview() {
         <GoogleBusinessCard />
 
         {/* Review CTA */}
-        <div className="bg-white rounded-3xl shadow-md p-10 text-center">
+        <div className="bg-white rounded-3xl shadow-md p-6 sm:p-8 md:p-10 text-center">
 
           {/* Google mark */}
           <div className="flex justify-center">

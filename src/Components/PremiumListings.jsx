@@ -7,7 +7,7 @@ export default function PremiumListings() {
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Content */}
-        <div className="flex items-center justify-between" data-aos="fade-up" data-aos-delay="100">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between" data-aos="fade-up" data-aos-delay="100">
           <div>
             <div className="inline-flex items-center gap-2 bg-white shadow-sm rounded-full px-4 py-2 text-sm text-gray-700 mb-6">
               <span className="text-orange-500">
@@ -29,7 +29,7 @@ export default function PremiumListings() {
               Properties Listing
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
             Explore Exceptional <span className="bg-linear-to-r from-[#345578] to-[#284769] bg-clip-text text-transparent">Properties</span>
               <br />
               <span className="bg-linear-to-r from-[#345578] to-[#284769] bg-clip-text text-transparent">Tailored </span> to Your Preferences
@@ -38,7 +38,7 @@ export default function PremiumListings() {
 
           <Link
             to="/Properties"
-            className="flex items-center gap-3 bg-linear-to-r from-[#345578] to-[#284769] text-white px-8 py-4 rounded-xl text-lg font-medium shadow-lg hover:scale-105 transition">
+            className="flex items-center justify-center gap-3 bg-linear-to-r from-[#345578] to-[#284769] text-white px-6 py-3 lg:px-8 lg:py-4 rounded-xl text-base lg:text-lg font-medium shadow-lg hover:scale-105 transition shrink-0">
             View All Properties
             <span className="text-xl">→</span>
           </Link>

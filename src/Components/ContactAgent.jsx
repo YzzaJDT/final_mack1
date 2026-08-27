@@ -119,13 +119,13 @@ export default function ContactAgent({ listingId, propertyAddress, propertyPrice
           {/* Contact Number */}
           <div>
             <label className="block text-sm text-gray-600 mb-2">Contact Number</label>
-            <input type="text" placeholder="Contact Number" value={form.contactNumber} onChange={handleChange("contactNumber")} className="w-full bg-white rounded-lg px-4 py-3 text-sm outline-none border border-gray-200 focus:ring-2 focus:ring-orange-400" />
+            <input type="tel" placeholder="Contact Number" value={form.contactNumber} onChange={handleChange("contactNumber")} className="w-full bg-white rounded-lg px-4 py-3 text-sm outline-none border border-gray-200 focus:ring-2 focus:ring-orange-400" />
           </div>
 
           {/* Phone */}
           <div>
             <label className="block text-sm text-gray-600 mb-2">Phone No</label>
-            <input type="text" placeholder="Phone No" value={form.phone} onChange={handleChange("phone")} className="w-full bg-white rounded-lg px-4 py-3 text-sm outline-none border border-gray-200 focus:ring-2 focus:ring-orange-400" />
+            <input type="tel" placeholder="Phone No" value={form.phone} onChange={handleChange("phone")} className="w-full bg-white rounded-lg px-4 py-3 text-sm outline-none border border-gray-200 focus:ring-2 focus:ring-orange-400" />
           </div>
 
           {/* Full Address - FULL WIDTH */}

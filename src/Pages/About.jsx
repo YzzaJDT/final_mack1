@@ -27,7 +27,7 @@ export default function About() {
           <div className="max-w-3xl">
 
             {/* Title */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold drop-shadow-lg">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold drop-shadow-lg">
              Discover Your  <span className="bg-linear-to-r from-[#a9d0f5] to-[#7fb0da] bg-clip-text text-transparent"> Perfect </span> Property
             </h1>
 

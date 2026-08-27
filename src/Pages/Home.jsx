@@ -102,7 +102,7 @@ export default function Home() {
     <div className="w-full max-w-xl lg:max-w-3xl">
 
       {/* Title */}
-      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold drop-shadow-lg">
+      <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold drop-shadow-lg">
           Discover{" "}
           <span className="bg-linear-to-r from-[#a9d0f5] to-[#7fb0da] bg-clip-text text-transparent">
             Spaces
@@ -114,7 +114,7 @@ export default function Home() {
         </h1>
 
       {/* Description */}
-      <p className="mt-4 text-sm sm:text-base max-w-2xl text-white/90">
+      <p className="mt-4 text-base sm:text-lg max-w-2xl text-white/90">
         Homes that adapt to your lifestyle today, tomorrow, and every step in between. Thoughtfully designed spaces that grow with your needs, offering comfort, functionality, and the freedom to live the way you envision.
       </p>
 
